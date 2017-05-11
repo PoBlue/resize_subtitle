@@ -3,7 +3,23 @@
   "description": "resize subttile in video",
   "version": "1.0",
   "permissions": [
-    "tabs", "https://classroom.udacity.com/*", "https://classroom.udacity.com/*"
+    "tabs",
+    "https://classroom.udacity.com/*",
+    "http://classroom.udacity.com/*",
+    "storage",
+    "webNavigation"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://classroom.udacity.com/*",
+        "http://classroom.udacity.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
   ],
   "browser_action": {
     "default_title": "resize subttile in video",
@@ -11,5 +27,7 @@
     "default_popup": "popup.html"
   },
   "manifest_version": 2,
-  "web_accessible_resources": ["resize_subtitle.js"]
+  "web_accessible_resources": [
+    "resize_subtitle.js"
+  ]
 }

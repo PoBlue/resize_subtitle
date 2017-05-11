@@ -1,8 +1,21 @@
 var subtitleSize = 100;
+var key = "subtitleSize";
+
+function savaDataInChrome(){
+  chrome.storage.local.set({ "subtitleSize": subtitleSize});
+}
+
+function getDataFromChrome(afterGetData){
+  chrome.storage.local.get([key], function (result) {
+    if (!isNaN(result[key])) {
+      subtitleSize = result[key];
+      afterGetData(subtitleSize);
+    } else {}
+  });
+}
 
 function click(e) {
-  console.log("out of range");
-  if (subtitleSize <= 0) {
+  if (subtitleSize <= 10) {
     console.log("out of range");
     return;
   }
@@ -20,6 +33,7 @@ function click(e) {
   }
 
   runResizeScript();
+  savaDataInChrome();
 }
 
 function runResizeScript() {
@@ -31,6 +45,9 @@ function runResizeScript() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  getDataFromChrome(function(subtitleSize) {
+    runResizeScript();
+  });
   var plusBtn = document.getElementById('plus');
   var minusBtn = document.getElementById('minus');
   var closeBtn = document.getElementById('close');
